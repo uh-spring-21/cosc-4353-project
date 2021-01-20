@@ -1,5 +1,5 @@
 # cosc-4353-project
-Tasks:
+Week-0 Tasks:
 - Choose Technology - React and MySQL (Done)
 - Create AWS Database (Martin will do this)
 - Connect via Workbench (everyone)
