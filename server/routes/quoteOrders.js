@@ -33,7 +33,7 @@ router.post("/fuelquoteform", async (req, res) => {
                 status: "This form has already been placed",
                 data: results,
               });
-              console.log({ message: "This form has already been placed" });
+              console.log({ message: "This form has already been placed!!" });
             };
             // console.log(results);
             return res.send("Success!")
@@ -71,7 +71,7 @@ router.post("/fuelquoteform", async (req, res) => {
   });
 
   //get pricing module info
-  app.get("/api/v1/pricingmodule", (req, res) => {
+  router.get("/api/v1/pricingmodule", (req, res) => {
     const sql = "SELECT * FROM pricingmodule;";
     const query = mysql.query(sql, (err, results) => {
       if (err) throw err;
@@ -82,3 +82,5 @@ router.post("/fuelquoteform", async (req, res) => {
       });
     });
   });
+
+  module.exports=router;

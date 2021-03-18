@@ -17,7 +17,7 @@ app.use(express.json());
 app.use("/auth", require("./routes/jwtAuth"));
 
 //fuel quote form and order history and pricing module
-//app.use("/order");
+app.use("/order", require("./routes/quoteOrders"));
 
 //client profile
 
