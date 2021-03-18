@@ -1,7 +1,7 @@
 const router = require("express").Router()
 const mysql = require("../db")
 const bcrypt = require('bcrypt');
-const cors = require("cors");
+
 //register
 
 router.post("/register", async (req,res) => {
