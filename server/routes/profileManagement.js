@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const app = require ("express");
+//const app = require ("express");
 const db = require("../db");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { Router } = require("express");
+//const { Router } = require("express");
 
 router.get("/", (req, res) => {
   res.send("Hello world!");
@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 
 // submit client information
 router.post("/clientInformation", async (req, res) => {
-    console.log(req.body);
+   // console.log(req.body);
     const full_name = req.body.full_name;
     const street = req.body.street;
     const street2 = req.body.street2;
@@ -56,6 +56,8 @@ router.post("/clientInformation", async (req, res) => {
 
         } catch (err) {
           console.log(err);
+          res.status(500).send("Server Error");
+
           }
         });
 
