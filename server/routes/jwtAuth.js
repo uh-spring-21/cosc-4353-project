@@ -32,7 +32,7 @@ router.post("/register", async (req,res) => {
                             return console.error(error.message);
                         }
                     }); 
-                    return res.status(200).send("Success user added!");
+                    return res.send("Success added!");
                   
                 });
             });

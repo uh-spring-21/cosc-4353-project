@@ -17,13 +17,13 @@ app.use(express.json());
 app.use("/auth", require("./routes/jwtAuth"));
 
 //fuel quote form and order history and pricing module
-app.use("/order", require("./routes/quoteOrders"));
+//app.use("/order");
 
 //client profile
-app.use("/clientInformation", require("./routes/clientInformation"));
+app.use("/clientInformation",require("./routes/profileManagement"));
 
 
-app.listen(5000,()=>{
+app.listen(5050,()=>{
     console.log("server has started");
 });
 
