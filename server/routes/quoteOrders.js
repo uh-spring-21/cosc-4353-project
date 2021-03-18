@@ -1,20 +1,21 @@
-const express = require("express");
-const app = express();
-//const db = require("/db");
+const router = require("express").Router();
+const app = require ("express");
+const db = require("../db");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
-app.get("/", (req, res) => {
+const { Router } = require("express");
+router.get("/", (req, res) => {
   res.send("Hello world!");
 });
-app.use(cors());
 
-app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(cors());
+
+// app.use(express.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 
 // submit fuel quote form
-app.post("/fuelquoteform", async (req, res) => {
+router.post("/fuelquoteform", async (req, res) => {
     console.log(req.body);
     const gallons = req.body.gallons;
     const street = req.body.street;
@@ -39,18 +40,18 @@ app.post("/fuelquoteform", async (req, res) => {
   
             
           });
-          const customer_last_inserted =  await db.query(
-            "select * from `fuel_quote` where fuelquote_id=LAST_INSERT_ID();",
+          // const customer_last_inserted =  await db.query(
+          //   "select * from `fuel_quote` where fuelquote_id=LAST_INSERT_ID();",
   
-            (err, results) =>{
-              if (err) throw err;
-              console.log(results);
-              res.status(200).json({
-                status: "success",
-                data: results,
-              });
-            }
-            );
+          //   (err, results) =>{
+          //     if (err) throw err;
+          //     console.log(results);
+          //     res.status(200).json({
+          //       status: "success",
+          //       data: results,
+          //     });
+          //   }
+          //   );
   
         } catch (err) {
           console.log(err);
@@ -76,7 +77,7 @@ app.get("/getquotehistory", (req, res) => {
       if (err) throw err;
       console.log(results);
       res.status(200).json({
-        status: "yessire",
+        status: "Success",
         results,
       });
     });
