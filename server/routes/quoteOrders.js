@@ -1,9 +1,8 @@
 const router = require("express").Router();
-const app = require ("express");
-const db = require("../db");
-const bodyParser = require("body-parser");
+const mysql = require("../db");
 const cors = require("cors");
-const { Router } = require("express");
+//const { Router } = require("express");
+
 router.get("/", (req, res) => {
   res.send("Hello world!");
 });
@@ -25,18 +24,19 @@ router.post("/fuelquoteform", async (req, res) => {
     const delivery_date = req.body.delivery_date;
     const suggest_quote = req.body.suggest_quote;
       try{
-        const customer =  await db.query(
+        const customer =  await mysql.query(
           "INSERT INTO `fuel_quote` (gallons, street, city, state, zipcode, delivery_date, suggest_quote) VALUES ( ?, ?, ?, ?, ?, ?, ?);",
           [gallons, street,city,state,zipcode,delivery_date, suggest_quote],
           (err, results) =>{
             if (err) {
-              res.status(200).json({
+              res.status(400).json({
                 status: "This form has already been placed",
                 data: results,
               });
               console.log({ message: "This form has already been placed" });
             };
-            console.log(results);
+            // console.log(results);
+            return res.send("Success!")
   
             
           });
@@ -58,13 +58,13 @@ router.post("/fuelquoteform", async (req, res) => {
           }
         });
   //get all quote history info
-app.get("/getquotehistory", (req, res) => {
+  router.get("/getquotehistory", (req, res) => {
     const sql = "SELECT * FROM fuelquote_order;";
-    const query = db.query(sql, (err, results) => {
+    const query = mysql.query(sql, (err, results) => {
       if (err) throw err;
       console.log(results);
-      res.status(200).json({
-        status: "yessire",
+      res.status(400).json({
+        status: "success",
         results,
       });
     });
@@ -73,10 +73,10 @@ app.get("/getquotehistory", (req, res) => {
   //get pricing module info
   app.get("/api/v1/pricingmodule", (req, res) => {
     const sql = "SELECT * FROM pricingmodule;";
-    const query = db.query(sql, (err, results) => {
+    const query = mysql.query(sql, (err, results) => {
       if (err) throw err;
       console.log(results);
-      res.status(200).json({
+      res.status(400).json({
         status: "Success",
         results,
       });
