@@ -16,6 +16,8 @@ app.use(express.json());
 //register and login routes
 app.use("/auth", require("./routes/jwtAuth"));
 
+//fuel quote form and order history and pricing module
+app.use("/order", require("./routes/quoteOrders"));
 
 app.listen(5000,()=>{
     console.log("server has started");
