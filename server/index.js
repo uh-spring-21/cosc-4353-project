@@ -20,7 +20,7 @@ app.use("/auth", require("./routes/jwtAuth"));
 app.use("/order", require("./routes/quoteOrders"));
 
 //client profile
-app.use("/clientInformation", require("./routes/clientInformation"));
+app.use("/clientInformation", require("./routes/profileManagement"));
 
 
 app.listen(5000,()=>{
