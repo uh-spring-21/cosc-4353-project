@@ -39,7 +39,7 @@ function Login() {
       <form onSubmit = {onSubmitForm}>
           <h2>Log In</h2>
 
-          <div>
+          <div className="login">
               <label>Username:</label>
               <input
               type="text"

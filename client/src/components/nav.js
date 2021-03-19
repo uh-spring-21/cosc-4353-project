@@ -18,6 +18,15 @@ function Nav() {
               <Link style = {navStyle} to ='/register'>
                 <li>Register</li>
               </Link>
+              <Link style = {navStyle} to ='/fuelquote'>
+                <li>Fuel Quote Form</li>
+              </Link>
+              <Link style = {navStyle} to ='/orderHistory'>
+                <li>Order History</li>
+              </Link>
+              <Link style = {navStyle} to ='/profile'>
+                <li>Profile Managerment</li>
+              </Link>
           </ul>
       </nav>
     </div>
