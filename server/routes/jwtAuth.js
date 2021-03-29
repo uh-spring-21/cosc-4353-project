@@ -1,43 +1,45 @@
 const router = require("express").Router()
 const mysql = require("../db")
 const bcrypt = require('bcrypt');
+const express = require("express");
 
 //register
 
 router.post("/register", async (req,res) => {
     //1 break down req body
     const {username,password}  = req.body;
+    const salt =  await bcrypt.genSalt(10);
+    const pwd =  await bcrypt.hash(password,salt);
     try {
 
         // check if user exist
-         
-            mysql.getConnection(function(err, conn){
-                conn.query("select * from usercredentials where username =?",[username], function(err, rows) {
-              
-                     if (rows.length > 0){
-                        return res.status(401).send("User already exists!");
-                     }
-                });
+            let x = false
+            const user = await mysql.query("select * from usercredentials where username =?",[username], (err,results)=>{
+                
+                if(err){
+                    console.error(err.message);
+                    return res.status(401);
+
+                }
+                if (results.length > 0)
+                {
+                
+                    return res.status(401).json("User already exists");
+                
+                }
+                
+                mysql.query("INSERT INTO usercredentials VALUES(?,?);",[username,pwd] ,(error, results, fields) =>{
+                    if(error)
+                    {
+                        return console.error(error.message);
+                    }
+                    else
+                        var x =1;
+                        return res.send("Success added!");
+                        
+                }); 
             });
-            
-        // decrypt password
-            const saltRounds = 10;
-            
-            bcrypt.genSalt(saltRounds, function(err,salt) {
-                bcrypt.hash(password,salt,function(err,hash){
-                    //let sql = ("INSERT INTO usercredentials VALUES(?,?);",[username,hash]);
-                    //console.log(sql);
-                    mysql.query("INSERT INTO usercredentials VALUES(?,?);",[username,hash] ,(error, results, fields) =>{
-                        if(error)
-                        {
-                            return console.error(error.message);
-                        }
-                    }); 
-                    return res.send("Success added!");
-                  
-                });
-            });
-        //enter the new user inside our database
+
 
 
 
@@ -56,30 +58,37 @@ router.post("/login", async (req,res)=>
     try {
         // destructure
         //check if user doesnt exist, if not error
-        mysql.getConnection(function(err, conn){
-        conn.query("SELECT * FROM usercredentials WHERE username =?;",[username] ,function (err,rows){
+        
+        mysql.query("SELECT * FROM usercredentials WHERE username =?;",[username] ,function (err,rows){
+            if(err){
+                console.error(err.message);
+                return res.status(401);
+                
+            }
             if (rows.length === 0)
             {
-              return res.status(401).send("Username does not exist.");
+                return res.status(401).send("Username does not exist.");
             }
             
+            
             bcrypt.compare(password, rows[0].password, function(err, result) {
-                if(!result)
+                if(result)
                 {
-                    return res.json(401).send("Wrong credentials!");
+                    return res.status(200).send("Login was successful!");
                 }
-
-                
-                return res.status(200).send("Login was successful!");
+                else
+                {
+                   var x =1
+                    return res.status(401).send("Wrong credentials!");
+                }
             });
-
         });
-    });
+        
         
         
         //check if incoming password is the same as DB
-
-
+        
+        
         //give them token?
         
     } catch (err) {
