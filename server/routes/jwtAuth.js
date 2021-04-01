@@ -14,7 +14,7 @@ router.post("/register", async (req,res) => {
 
         // check if user exist
             let x = false
-            const user = await mysql.query("select * from usercredentials where username =?",[username], (err,results)=>{
+            const user = await mysql.query("select * from COSC4353.UserCredentials where username =?",[username], (err,results)=>{
                 
                 if(err){
                     console.error(err.message);
@@ -28,7 +28,7 @@ router.post("/register", async (req,res) => {
                 
                 }
                 
-                mysql.query("INSERT INTO usercredentials VALUES(?,?);",[username,pwd] ,(error, results, fields) =>{
+                mysql.query("INSERT INTO COSC4353.UserCredentials (username, password)  VALUES(?,?);",[username,pwd] ,(error, results, fields) =>{
                     if(error)
                     {
                         return console.error(error.message);
@@ -59,7 +59,7 @@ router.post("/login", async (req,res)=>
         // destructure
         //check if user doesnt exist, if not error
         
-        mysql.query("SELECT * FROM usercredentials WHERE username =?;",[username] ,function (err,rows){
+        mysql.query("SELECT * FROM COSC4353.UserCredentials WHERE username =? AND password =? ;",[username, password] ,function (err,rows){
             if(err){
                 console.error(err.message);
                 return res.status(401);

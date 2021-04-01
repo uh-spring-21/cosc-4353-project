@@ -23,7 +23,7 @@ router.post("/clientInformation", async (req, res) => {
     const zipcode = req.body.zipcode;
       try{
         const customer =  await mysql.query(
-          "INSERT INTO `clientInformation` (full_name, address1, address2,city,state,zipcode) VALUES (?, ?, ?, ?, ?, ?);",
+          "INSERT INTO `COSC4353.client_information` (full_name, address1, address2,city,state,zipcode) VALUES (?, ?, ?, ?, ?, ?);",
           [full_name, street, street2, city, state, zipcode],
           (err, results) =>{
             if (err) {
