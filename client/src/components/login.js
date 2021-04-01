@@ -6,7 +6,7 @@ import {Link } from 'react-router-dom';
 
 
 
-function Login() {
+function Login({setAuth}) {
   const [inputs, setInputs] =  useState({username: "" , password: ""});
 
   const {username, password} = inputs;
@@ -20,16 +20,27 @@ function Login() {
     e.preventDefault()
     try {
       const body = {username,password}
-      const response = await fetch("http://localhost:5000/auth/login", {
+      const response = await fetch("http://localhost:5050/auth/login", {
         method: "POST",
         headers:{"Content-type" : "application/json"},
         body: JSON.stringify(body),
         dataType: 'jsonp'
     });
 
-    const parseRes = await response
-    console.log(parseRes)
-      
+    const parseRes = await response.json();
+
+    if (parseRes.token)
+    {
+      localStorage.setItem("token",parseRes.token)
+      setAuth(true);
+     
+    }
+    else{
+      alert(parseRes)
+    }
+    
+
+
     } catch (err) {
       console.error(err)
     }

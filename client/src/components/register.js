@@ -3,13 +3,14 @@ import '../App.css';
 
 
 
-const Register = ()=> {
+const Register = ({setAuth})=> {
   const [inputs, setInputs] =  useState({username: "" , password: ""});
 
   const {username, password} = inputs;
 
   const onChange = e => 
     setInputs({...inputs, [e.target.name]: e.target.value});
+   
     const onSubmitForm = async (e) =>
     {
   
@@ -17,15 +18,26 @@ const Register = ()=> {
       try {
        
         const body = {username,password};
-        const response = await fetch("http://localhost:5000/auth/register", {
+        const response = await fetch("http://localhost:5050/auth/register", {
           method: "POST",
           headers:{"Content-type" : "application/json"},
           body: JSON.stringify(body),
           dataType: 'jsonp'
       });
-      alert('User has been created!');
-      const parseRes = await response
-      console.log(parseRes)
+
+      const parseRes = await response.json();
+
+      if (parseRes.token)
+      {
+        localStorage.setItem("token",parseRes.token)
+        setAuth(true);
+        alert('User has been created!');
+      }
+      else{
+        alert(parseRes)
+      }
+      
+
         
       } catch (err) {
         console.error(err)
