@@ -25,7 +25,7 @@ router.post("/fuelquoteform", async (req, res) => {
     const suggest_quote = req.body.suggest_quote;
       try{
         const customer =  await mysql.query(
-          "INSERT INTO COSC4353.fuelquote (gallons_req, street, city, state, zipcode, delivery_date, suggest_quote) VALUES ( ?, ?, ?, ?, ?, ?, ?);",
+          "INSERT INTO COSC4353.fuelquote (gallons_req, delivery_street, delivery_city, delivery_state, delivery_zipcode, delivery_date, suggest_quote) VALUES ( ?, ?, ?, ?, ?, ?, ?);",
           [gallons, street,city,state,zipcode,delivery_date, suggest_quote],
           (err, results) =>{
             if (err) {
