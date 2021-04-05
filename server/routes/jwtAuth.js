@@ -2,10 +2,15 @@ const router = require("express").Router()
 const mysql = require("../db")
 const bcrypt = require('bcrypt');
 const express = require("express");
+const jwtGenerator = require('../utils/jwtGenerator')
+const jwt = require('jsonwebtoken');
+const valid = require("../middleware/valid")
+const authorize = require("../middleware/authorize")
 
-//register
 
-router.post("/register", async (req,res) => {
+//register -
+
+router.post("/register", valid, async (req,res) => {
     //1 break down req body
     const {username,password}  = req.body;
     const salt =  await bcrypt.genSalt(10);
@@ -35,11 +40,12 @@ router.post("/register", async (req,res) => {
                     }
                     else
                         var x =1;
-                        return res.send("Success added!");
+                        //return res.send("Success added!");
                         
+                        const token = jwtGenerator(username);
+                        res.json({token});
                 }); 
             });
-
 
 
 
@@ -52,7 +58,7 @@ router.post("/register", async (req,res) => {
 
 // login module
 
-router.post("/login", async (req,res)=>
+router.post("/login", valid,async (req,res)=>
 {
     const {username,password}  = req.body;
     try {
@@ -67,19 +73,21 @@ router.post("/login", async (req,res)=>
             }
             if (rows.length === 0)
             {
-                return res.status(401).send("Username does not exist.");
+                return res.status(401).json("Username does not exist.");
             }
             
             
             bcrypt.compare(password, rows[0].password, function(err, result) {
                 if(result)
                 {
-                    return res.status(200).send("Login was successful!");
+                    const token = jwtGenerator(username);
+                    return res.json({token})
+                    //return res.status(200).send("Login was successful!");
                 }
                 else
                 {
                    var x =1
-                    return res.status(401).send("Wrong credentials!");
+                    return res.status(401).json("Wrong credentials!");
                 }
             });
         });
@@ -96,5 +104,16 @@ router.post("/login", async (req,res)=>
         res.status(500).send("Server Error");
     }
 });
+
+router.get("/is-verified", authorize, async(req,res) =>
+{
+    try {
+        res.json(true)
+    } catch (error) {
+        console.error(err.message);
+        res.status(500).send("Server Error");
+        
+    }
+})
 
 module.exports=router;
