@@ -25,7 +25,7 @@ router.post("/fuelquoteform", async (req, res) => {
     const suggest_quote = req.body.suggest_quote;
       try{
         const customer =  await mysql.query(
-          "INSERT INTO `fuel_quote` (gallons, street, city, state, zipcode, delivery_date, suggest_quote) VALUES ( ?, ?, ?, ?, ?, ?, ?);",
+          "INSERT INTO COSC4353.fuelquote (gallons_req, delivery_street, delivery_city, delivery_state, delivery_zipcode, delivery_date, suggest_quote) VALUES ( ?, ?, ?, ?, ?, ?, ?);",
           [gallons, street,city,state,zipcode,delivery_date, suggest_quote],
           (err, results) =>{
             if (err) {
@@ -59,7 +59,7 @@ router.post("/fuelquoteform", async (req, res) => {
         });
   //get all quote history info
   router.get("/getquotehistory", (req, res) => {
-    const sql = "SELECT * FROM fuelquote_order;";
+    const sql = "SELECT * FROM COSC4353.order_history;";
     const query = mysql.query(sql, (err, results) => {
       if (err) throw err;
       console.log(results);
@@ -72,7 +72,7 @@ router.post("/fuelquoteform", async (req, res) => {
 
   //get pricing module info
   router.get("/api/v1/pricingmodule", (req, res) => {
-    const sql = "SELECT * FROM pricingmodule;";
+    const sql = "SELECT * FROM COSC4353.state_price;";
     const query = mysql.query(sql, (err, results) => {
       if (err) throw err;
       console.log(results);
