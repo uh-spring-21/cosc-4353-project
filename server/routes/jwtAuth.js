@@ -8,7 +8,7 @@ const valid = require("../middleware/valid")
 const authorize = require("../middleware/authorize")
 
 
-//register
+//register -
 
 router.post("/register", valid, async (req,res) => {
     //1 break down req body
