@@ -65,7 +65,7 @@ router.post("/login", valid,async (req,res)=>
         // destructure
         //check if user doesnt exist, if not error
         
-        mysql.query("SELECT * FROM COSC4353.UserCredentials WHERE username =? AND password =? ;",[username, password] ,function (err,rows){
+        mysql.query("SELECT * FROM COSC4353.UserCredentials WHERE username =?;",[username] ,function (err,rows){
             if(err){
                 console.error(err.message);
                 return res.status(401);

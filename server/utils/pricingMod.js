@@ -1,3 +1,5 @@
+const mysql = require("../db")
+
 function pricingMod(){
 
     // this is to check if user already has history for historyFactor
@@ -5,7 +7,7 @@ function pricingMod(){
 
     var username //where do i get this from? is this also global?
     var sql = 'SELECT COUNT(*) AS rowsCount FROM fuelquote WHERE username = '
-    connection.query(sql, [username], function(err, rows, fields) {
+    mysql.query(sql, [username], function(err, rows, fields) {
         if (err) throw err;
         console.log('Query result: ', rows);
     });
