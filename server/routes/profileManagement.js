@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const mysql = require("../db");
-const cors = require("cors");
+const cors = require("cors")
 //const { Router } = require("express");
 
 router.get("/", (req, res) => {
@@ -9,28 +9,40 @@ router.get("/", (req, res) => {
 
 //app.use(cors());
 
-//app.use(express.json());
-//app.use(bodyParser.urlencoded({ extended: true }));
+
+//go to profile page
+router.get("/:userID", async (req, res) =>{
+  const userID = req.params.userID;
+  try {
+    const user = await mysql.query("SELECT * FROM COSC4353.client_information where userID = ?", [userID], (err, results)=>{
+      if(err) throw err;
+      console.log(results);
+    res.status(200).json({
+      results,
+    })
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error");
+
+    }
+})
+
+
 
 // submit client information
-router.post("/clientInformation", async (req, res) => {
+router.post("/update", async (req, res) => {
    // console.log(req.body);
-    const full_name = req.body.full_name;
-    const street = req.body.street;
-    const street2 = req.body.street2;
-    const city = req.body.city;
-    const state = req.body.state;
-    const zipcode = req.body.zipcode;
+    const {userID, name, street, street2, city, state, zipcode} = req.body;
+
       try{
         const customer =  await mysql.query(
-          "INSERT INTO `COSC4353.client_information` (full_name, address1, address2,city,state,zipcode) VALUES (?, ?, ?, ?, ?, ?);",
-          [full_name, street, street2, city, state, zipcode],
+          "INSERT INTO COSC4353.client_information (userID, name, street, street2, city,state,zipcode) VALUES (?, ?, ?, ?, ?, ?, ?);",
+          [userID, name, street, street2, city, state, zipcode],
           (err, results) =>{
             if (err) {
-              res.status(400).json({
-                status: "Submit Failed",
-                data: results,
-              });
+              console.error(err.message);
+              return res.status(401);
             };
            // console.log(results);
             

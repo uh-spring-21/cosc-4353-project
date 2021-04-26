@@ -19,11 +19,10 @@ function pricingMod(){
     var total = 0;
     var location = documnet.getElementId("state").value;
     var locationFactor = 0;
-    var history = rows[0].rowsCount;
     var historyFactor = 0;
     var gallons = documnet.getElementId("gallons").value;
     var gallonsFactor = 0;
-    var profit = .1;
+    var profitFactor = .1;
 //-----------------------------------------------------------------------------
     if (location = "TX"){
         locationFactor = .02;

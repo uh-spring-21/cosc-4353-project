@@ -8,7 +8,13 @@ const profile = () => {
 <tr>
 
     <td>
+    <div>
 
+<label class="required" for="fullName">Username:</label>
+<ul>
+<li><input type="text" name="username" id="username" required /></li>
+</ul>
+</div>
         <div>
 
         <label class="required" for="fullName">Full Name:</label>
