@@ -1,6 +1,45 @@
-import React from 'react'
+import React, {useContext, useEffect, useState} from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import axios from "axios";
+const Profile = () => {
 
-const profile = () => {
+    const {userID} = useParams();
+    let history = useHistory();
+    const [name, setName] = useState("");
+    const [street, setStreet] = useState("");
+    const [street2, setStreet2] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
+    const [zipcode, setZipcode] = useState("");
+    useEffect(() =>{
+        const fetchData = async() => {
+            
+            axios.get(`http://localhost:5050/clientInformation/${userID}`,
+            {
+                
+                name,
+                street,
+                street2,
+                city,
+                state,
+                zipcode,
+                
+            })
+            // .then((response) => {
+            //     let ticket = response;
+            //     console.log(response);
+            //     setName(response.results.name);
+            //     setStreet(response.data.data.getticket.street);
+            //     setStreet2(response.data.data.getticket.street2);
+            //     setCity(response.data.data.getticket.city);
+            //     setState(response.data.data.getticket.state);
+            //     setZipcode(response.data.data.getticket.zipcode);
+    
+            // });
+        };
+        fetchData();
+    },[]);
+
     return (
         <div>
              <table>
@@ -64,9 +103,9 @@ const profile = () => {
 </tr>
 
 </table>
-<h2>asdasdas</h2>
+
         </div>
     )
 }
 
-export default profile
+export default Profile

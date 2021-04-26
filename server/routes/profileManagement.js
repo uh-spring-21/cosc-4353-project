@@ -14,11 +14,14 @@ router.get("/", (req, res) => {
 router.get("/:userID", async (req, res) =>{
   const userID = req.params.userID;
   try {
-    const user = await mysql.query("SELECT * FROM COSC4353.client_information where userID = ?", [userID], (err, results)=>{
+    const user = await mysql.query("SELECT * FROM COSC4353.UserCredentials where userID = ?", [userID], (err, results)=>{
       if(err) throw err;
       console.log(results);
     res.status(200).json({
-      results,
+      status: "success",
+      data:{
+        data: results
+      },
     })
     });
   } catch (err) {

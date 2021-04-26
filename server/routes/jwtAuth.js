@@ -13,6 +13,9 @@ const authorize = require("../middleware/authorize")
 router.post("/register", valid, async (req,res) => {
     //1 break down req body
     const {username,password}  = req.body;
+    ///tri
+    const {name, street, street2, city, state, zipcode} = req.body;
+    ///tri
     const salt =  await bcrypt.genSalt(10);
     const pwd =  await bcrypt.hash(password,salt);
     try {
@@ -33,7 +36,7 @@ router.post("/register", valid, async (req,res) => {
                 
                 }
                 
-                mysql.query("INSERT INTO COSC4353.UserCredentials (username, password)  VALUES(?,?);",[username,pwd] ,(error, results, fields) =>{
+                mysql.query("INSERT INTO COSC4353.UserCredentials (username, password, name, street, street2, city,state,zipcode)  VALUES(?,?, ?, ?, ?, ?, ?, ?);",[username,pwd, name, street, street2, city, state, zipcode] ,(error, results, fields) =>{
                     if(error)
                     {
                         return console.error(error.message);
@@ -45,6 +48,15 @@ router.post("/register", valid, async (req,res) => {
                         const token = jwtGenerator(username);
                         res.json({token});
                 }); 
+                // ///// [TRI] I want customer to input there info when they register
+                // mysql.query("INSERT INTO COSC4353.UserCredentials (name, street, street2, city,state,zipcode) VALUES (?, ?, ?, ?, ?, ?);",
+                // [name, street, street2, city, state, zipcode],
+                // (err, results) =>{                    
+                //     return console.log("profile created")
+                    
+                //   })
+    
+                // ////// end
             });
 
 

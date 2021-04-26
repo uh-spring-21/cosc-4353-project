@@ -7,8 +7,9 @@ import Register from './components/register';
 import fuelQuote from './components/fuelQuote';
 import orderHistory from './components/orderHistory';
 import Home from './routes/Home';
-import profile from './components/profile';
+import Profile from './components/Profile';
 import Dashboard from './components/dashboard';
+import profileRequest from './components/ProfileRequest';
 function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -27,7 +28,8 @@ function App() {
 
         <Route path='/fuelquote' component={fuelQuote}/>
         <Route path='/orderHistory' component={orderHistory}/>
-        <Route path='/profile' component={profile}/>
+        <Route path='/profilerequest' component={profileRequest}/>
+        <Route path='/profile' component={Profile}/>
     </div>
   </Router>
   );
