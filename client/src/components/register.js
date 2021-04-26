@@ -74,7 +74,7 @@ const Register = ({setAuth})=> {
               ></input>
           </div>
           {/* [tri] I want to make the customer to register when they sign up */}
-          <div>
+          {/* <div>
               <label>Full name</label>
               <input
               type="text"
