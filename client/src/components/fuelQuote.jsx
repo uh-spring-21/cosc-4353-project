@@ -1,11 +1,34 @@
-import React from 'react'
+import React, {useState,useEffect} from 'react';
 import '../App.css';
-const fuelQuote = () => {
+
+const FuelQuote = () => {
+    const [name, setName] =  useState("")
+
+    async function getName(){
+        try {
+            const response = await fetch("http://localhost:5050/dashboard/", {
+                method: "GET",
+                headers: {token: localStorage.token}
+            });
+            
+            const parseResponse = await response.json()
+
+            setName(parseResponse);
+            
+        } catch (error) {
+            console.error(error.message)
+            
+        }
+    }
+    useEffect(()=>{
+        getName()
+    })
+
     return (
         <div>
-        <h1> Fuel Quote Form</h1><br />
+        <h1> Fuel Quote Form </h1><br />
 
-<div>User: Tom Braddy</div>
+<div>User: {name}</div>
 <div>Logged in</div>
 <div>12345 UH Street</div>
 <div>Houston</div>
@@ -116,4 +139,4 @@ const fuelQuote = () => {
     )
 }
 
-export default fuelQuote
+export default FuelQuote

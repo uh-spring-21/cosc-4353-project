@@ -15,8 +15,8 @@ app.use(express.json());
 
 //register and login routes
 app.use("/auth", require("./routes/jwtAuth"));
-app.use("/home", require("./routes/home"))
-
+app.use("/home", require("./routes/home"));
+app.use("/dashboard" , require("./routes/dashboard"));
 //fuel quote form and order history and pricing module
 app.use("/order", require("./routes/quoteOrders"));
 
