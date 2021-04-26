@@ -133,7 +133,7 @@ const Register = ({setAuth})=> {
               value={zipcode}
               onChange = {e => onChange(e)}              
               ></input>
-          </div>
+          </div> */}
 
           {/* [tri] end */}
           <div>

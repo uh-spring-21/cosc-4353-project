@@ -36,7 +36,7 @@ router.post("/register", valid, async (req,res) => {
                 
                 }
                 
-                mysql.query("INSERT INTO COSC4353.UserCredentials (username, password, name, street, street2, city,state,zipcode)  VALUES(?,?, ?, ?, ?, ?, ?, ?);",[username,pwd, name, street, street2, city, state, zipcode] ,(error, results, fields) =>{
+                mysql.query("INSERT INTO COSC4353.UserCredentials (username, password)  VALUES(?,?);",[username,pwd] ,(error, results, fields) =>{
                     if(error)
                     {
                         return console.error(error.message);
