@@ -11,35 +11,57 @@ const Profile = () => {
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
     const [zipcode, setZipcode] = useState("");
-    useEffect(() =>{
-        const fetchData = async() => {
+    // useEffect(() =>{
+    //     const fetchData = async() => {
             
-            axios.get(`http://localhost:5050/clientInformation/${userID}`,
+    //         axios.get(`http://localhost:5050/clientInformation/${userID}`,
+    //         {
+                
+    //             name,
+    //             street,
+    //             street2,
+    //             city,
+    //             state,
+    //             zipcode,
+                
+    //         })
+    //         // .then((response) => {
+    //         //     let ticket = response;
+    //         //     console.log(response);
+    //         //     setName(response.results.name);
+    //         //     setStreet(response.data.data.getticket.street);
+    //         //     setStreet2(response.data.data.getticket.street2);
+    //         //     setCity(response.data.data.getticket.city);
+    //         //     setState(response.data.data.getticket.state);
+    //         //     setZipcode(response.data.data.getticket.zipcode);
+    
+    //         // });
+    //     };
+    //     fetchData();
+    // },[]);
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+            
+            const response = await axios.post(`http://localhost:5050/clientInformation/${userID}`,
             {
+
+                    userID
+
                 
-                name,
-                street,
-                street2,
-                city,
-                state,
-                zipcode,
-                
-            })
-            // .then((response) => {
-            //     let ticket = response;
-            //     console.log(response);
+            }).then((response) => {
+                let ticket = response;
+                console.log(response);
             //     setName(response.results.name);
             //     setStreet(response.data.data.getticket.street);
             //     setStreet2(response.data.data.getticket.street2);
             //     setCity(response.data.data.getticket.city);
             //     setState(response.data.data.getticket.state);
             //     setZipcode(response.data.data.getticket.zipcode);
-    
-            // });
-        };
-        fetchData();
-    },[]);
 
+});
+};
     return (
         <div>
              <table>
@@ -48,12 +70,14 @@ const Profile = () => {
 
     <td>
     <div>
-
-<label class="required" for="fullName">Username:</label>
+<label class="required" for="fullName">user id:</label>
 <ul>
-<li><input type="text" name="username" id="username" required /></li>
+<li><input type="number" value={userID} name="userID" id="userID" required /></li>
 </ul>
+<button onClick={handleSubmit} type="submit" class="button" type="submit" >get profile information</button>
 </div>
+<form action=""></form>
+
         <div>
 
         <label class="required" for="fullName">Full Name:</label>

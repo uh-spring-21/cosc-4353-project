@@ -7,10 +7,10 @@ router.get("/", (req, res) => {
   res.send("Hello world!");
 });
 
-//app.use(cors());
+router.use(cors());
 
 
-//go to profile page
+//go to profile page with userID
 router.get("/:userID", async (req, res) =>{
   const userID = req.params.userID;
   try {
@@ -31,6 +31,26 @@ router.get("/:userID", async (req, res) =>{
     }
 })
 
+//profile with username
+router.get("/profileget", async (req, res) =>{
+  const username = req.body.username;
+  try {
+    const user = await mysql.query("SELECT * FROM COSC4353.UserCredentials where username = ?", [username], (err, results)=>{
+      if(err) throw err;
+      console.log(results);
+    res.status(200).json({
+      status: "success",
+      data:{
+        data: results
+      },
+    })
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server Error");
+
+    }
+})
 
 
 // submit client information

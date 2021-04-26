@@ -24,7 +24,7 @@ function Nav() {
               <Link style = {navStyle} to ='/orderHistory'>
                 <li>Order History</li>
               </Link>
-              <Link style = {navStyle} to ='/profilerequest'>
+              <Link style = {navStyle} to ='/profile'>
                 <li>Profile Managerment</li>
               </Link>
           </ul>
