@@ -63,7 +63,7 @@ const FuelQuote = () => {
                 <label class="required" for="address">Delivery Address:</label>
             <input disabled type="text" name="street" id="street" placeholder="12345 UH Street" required />
             <input disabled type="text" name="city" id="city" placeholder="Houston"  required />
-            <select name="state" id="state" style="width: 160px; height:25" >
+            <select name="state" id="state" >
                 <option value="" selected="selected">Select a State</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>

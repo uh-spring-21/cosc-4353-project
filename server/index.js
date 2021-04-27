@@ -19,6 +19,8 @@ app.use("/home", require("./routes/home"));
 app.use("/dashboard" , require("./routes/dashboard"));
 //fuel quote form and order history and pricing module
 app.use("/order", require("./routes/quoteOrders"));
+app.use("/price", require("./routes/pricingModule"));
+
 
 //client profile
 
