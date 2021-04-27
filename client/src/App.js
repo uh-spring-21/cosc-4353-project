@@ -17,7 +17,8 @@ function App() {
   const setAuth = (boolean) => {setIsAuthenticated(boolean);}; 
 
   return (
-  <Router>
+    
+    <Router>
     <div className="App">
     
      
