@@ -13,9 +13,6 @@ const authorize = require("../middleware/authorize")
 router.post("/register", valid, async (req,res) => {
     //1 break down req body
     const {username,password}  = req.body;
-    ///tri
-    const {name, street, street2, city, state, zipcode} = req.body;
-    ///tri
     const salt =  await bcrypt.genSalt(10);
     const pwd =  await bcrypt.hash(password,salt);
     try {
