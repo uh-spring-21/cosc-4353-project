@@ -4,6 +4,7 @@ const cors = require("cors")
 // const { Router } = require("express");
 
 
+router.use(cors());
 
 
 //go to profile page with userID
@@ -28,17 +29,18 @@ const cors = require("cors")
 // })
 
 //profile with username
-router.get("/profileget", async (req, res) =>{
-  const username = req.body.username;
+router.get("/api/profileget/:username", async (req, res) =>{
+  // const username = req.body.username;
+  const username = req.params.username
   try {
-    const user = await mysql.query("SELECT * FROM COSC4353.client_information where username = 'admin'",[username], (err, results)=>{
-      if(err) throw err;
-      console.log(results);
-    res.status(200).json({
-      status: "succcccess",
-      data:{
-        results
-      },
+    const user = await mysql.query("SELECT * FROM COSC4353.client_information where username = ?; ",[username], (err, results)=>{
+      if(err){
+        console.error(err.message)
+        return res.status(400).json("please complete")
+      };
+      res.status(200).json({
+        status: "succcccess",
+        results: results
     })
     });
   } catch (err) {
@@ -69,19 +71,6 @@ router.post("/update", async (req, res) => {
             
           });
           
-          /*
-          const customer_last_inserted =  await db.query(
-            "select * from `clientInformation` where client_id = LAST_INSERT_ID();",
-
-            (err, results) =>{
-              if (err) throw err;
-              console.log(results);
-              res.status(400).json({
-                status: "success",
-                data: results,
-              });
-            }
-            );*/
 
         } catch (err) {
           console.log(err);
@@ -89,5 +78,33 @@ router.post("/update", async (req, res) => {
 
           }
         });
+
+// edit client information
+router.put("/change", async (req, res) => {
+  // console.log(req.body);
+   const {username, name, street, street2, city, state, zipcode} = req.body;
+
+     try{
+       const customer =  await mysql.query(
+         "INSERT INTO COSC4353.client_information (username, name, street, street2, city,state,zipcode) VALUES (?, ?, ?, ?, ?, ?, ?);",
+         [username, name, street, street2, city, state, zipcode],
+         (err, results) =>{
+           if (err) {
+             console.error(err.message);
+             return res.status(401);
+           };
+          // console.log(results);
+           
+           return res.send("Success!")
+           
+         });
+         
+
+       } catch (err) {
+         console.log(err);
+         res.status(500).send("Server Error");
+
+         }
+       });
 
 module.exports=router;

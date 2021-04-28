@@ -16,6 +16,8 @@
     "express": "^4.17.1",
     "history": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
+    "laravel-elixir-webpack-official": "^1.0.10",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "pg": "^8.5.1"
   },

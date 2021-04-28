@@ -1,18 +1,19 @@
 const router = require("express").Router();
 const mysql = require("../db");
 
-router.get("/quote", (req,res)=>{
+router.get("/quote/:username/:gallons_req", async(req,res)=>{
 
-    
-    const {username, gallons_req, delivery_date} = req.body;
-    var delivery_state;
-    var delivery_street;
+    const username = req.params.username;
+    const gallons_req = req.params.gallons_req;
+    const delivery_date = req.body;
+    var state;
+    var street;
     var city;
     var zipcode;
 
     try{
 
-        const getState = mysql.query("SELECT * from COSC4353.client_information where username =?", [username], (err,results) =>{
+        const getState = await mysql.query("SELECT * from COSC4353.client_information where username =?", [username], (err,results) =>{
             
             
             if(err)
@@ -27,8 +28,8 @@ router.get("/quote", (req,res)=>{
             }
             
             else{
-                delivery_state = results[0].state;
-                delivery_street = results[0].street
+                state = results[0].state;
+                street = results[0].street
             zipcode = results[0].zipcode
             city = results[0].city
 
@@ -37,7 +38,7 @@ router.get("/quote", (req,res)=>{
         
 
     
-    const pastOrders = mysql.query("select * from COSC4353.fuelquote where username =?",[username], (err,results)=>{
+    const pastOrders =  mysql.query("select * from COSC4353.fuelquote where username =?",[username], (err,results)=>{
                 
         if(err){
             console.error(err.message);
@@ -51,7 +52,7 @@ router.get("/quote", (req,res)=>{
         var rateHistoryMargin;
         var gallonsMargin;
         
-        if(delivery_state == "TX")
+        if(state == "TX")
         {
             stateMargin = 0.02;
         }
@@ -86,8 +87,9 @@ router.get("/quote", (req,res)=>{
             return res.status(200).json({
                 data:
                 {   username,
-                    delivery_state,
-                    delivery_street,
+                    gallons_req,
+                    state,
+                    street,
                     city,
                     zipcode,
                     price,
@@ -112,22 +114,24 @@ router.get("/quote", (req,res)=>{
 router.post("/submit", (req,res)=>{
     const {username, 
         gallons_req, 
-        delivery_state, 
-        delivery_zipcode, 
-        delivery_street, 
-        suggest_quote, 
-        total_amount_due, 
-        delivery_city, 
-        delivery_date} = req.body;
+        state, 
+        zipcode, 
+        street, 
+        price, 
+        total, 
+        city, 
+        date} = req.body;
 
-        const query = mysql.query("INSERT INTO COSC4353.fuelquote (username,gallons_req, delivery_state, delivery_zipcode, delivery_street, suggest_quote, total_amount_due, delivery_city, delivery_date) VALUES (?,?,?,?,?,?,?,?,?)" , [username, gallons_req, 
-            delivery_state, delivery_zipcode, delivery_street, suggest_quote, total_amount_due, 
-            delivery_city, delivery_date], (err,results)=>{
+        const query = mysql.query("INSERT INTO COSC4353.fuelquote (username, gallons_req, state, zipcode, street, price, total, city, date) VALUES (?,?,?,?,?,?,?,?,?)" , [username, gallons_req, 
+            state, zipcode, street, price, total, 
+            city, date], (err,results)=>{
                 if(err){
                     console.error(err.message);
                 }
                 else{
+
                     res.status(200).json("Inserted Quote");
+                    console.log(results);
                 }
 
             })

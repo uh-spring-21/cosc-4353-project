@@ -21,7 +21,7 @@ function Nav() {
               <Link style = {navStyle} to ='/fuelquote'>
                 <li>Fuel Quote Form</li>
               </Link>
-              <Link style = {navStyle} to ='/orderHistory'>
+              <Link style = {navStyle} to ='/OrderHistory'>
                 <li>Order History</li>
               </Link>
               <Link style = {navStyle} to ='/profile'>

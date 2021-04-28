@@ -83,4 +83,28 @@ router.post("/fuelquoteform", async (req, res) => {
     });
   });
 
+///GET HISTORY
+  router.get("/getorder/:username", async (req, res) =>{
+    // const username = req.body.username;
+    const username = req.params.username
+    try {
+      const user = await mysql.query("SELECT * FROM COSC4353.fuelquote where username = ?; ",[username], (err, results)=>{
+        if(err){
+          console.error(err.message)
+          return res.status(400).json("please complete")
+        };
+        res.status(200).json({
+          status: "succcccess",
+          results: results
+      })
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("Server Error");
+  
+      }
+  })
+
+
+
   module.exports=router;

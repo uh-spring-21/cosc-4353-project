@@ -5,7 +5,7 @@ import Nav from './components/nav';
 import Login from './components/login';
 import Register from './components/register';
 import fuelQuote from './components/fuelQuote';
-import orderHistory from './components/orderHistory';
+import OrderHistory from './components/OrderHistory';
 import Home from './routes/Home';
 import Profile from './components/Profile';
 import Dashboard from './components/dashboard';
@@ -28,7 +28,7 @@ function App() {
         <Route path='/dashboard'  render={props => isAuthenticated ? <Dashboard {...props} setAuth = {setAuth} /> : <Redirect to = "/login" />} />
 
         <Route path='/fuelquote' component={fuelQuote}/>
-        <Route path='/orderHistory' component={orderHistory}/>
+        <Route path='/orderHistory' component={OrderHistory}/>
         <Route path='/profilerequest' component={profileRequest}/>
         <Route path='/profile' component={Profile}/>
     </div>
