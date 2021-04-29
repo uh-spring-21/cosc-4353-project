@@ -1,141 +1,164 @@
+
+
 import React, {useContext, useEffect, useState} from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from "axios";
+import { OrderContext } from '../context/OrderContext'
 import '../style.css';
-const OrderHistory = () => {
+class OrderHistory  extends React.Component {
 
-    let history = useHistory();
-    const [username, setUsername] = useState("");
-    const [name, setName] = useState("");
-    const [gallons_req, setGallons] = useState("");
-    const [reqID, setReqID] = useState("");
-    const [price, setPrice] = useState("");
-    const [total, setTotal] = useState("");
-    const [street, setStreet] = useState("");
-    const [street2, setStreet2] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [zipcode, setZipcode] = useState("");
+    // let history = useHistory();
+    // const [username, setUsername] = useState("");
+    // const [name, setName] = useState("");
+    // const [gallons_req, setGallons] = useState("");
+    // const [reqID, setReqID] = useState("");
+    // const [price, setPrice] = useState("");
+    // const [total, setTotal] = useState("");
+    // const [street, setStreet] = useState("");
+    // const [street2, setStreet2] = useState("");
+    // const [city, setCity] = useState("");
+    // const [state, setState] = useState("");
+    // const [zipcode, setZipcode] = useState("");
+    // const [data, setData] = useState([]);
 
-    async function getUsername(){
+    state = {
+        data : [],
+        username :""
+    }
+
+    // const handleClick = ()=>{
+    //     getUsername()
+    //     getInfo()
+    //     getOrder()
+    // }
+
+    getData= async ()=>{
         try {
             const response = await fetch("http://localhost:5050/dashboard/", {
                 method: "GET",
                 headers: {token: localStorage.token}
             });
-            
-            const parseResponse = await response.json()
 
-            setUsername(parseResponse);
+            const parseResponse = await response.json()
             
-        } catch (error) {
-            console.error(error.message)
-            
-        }
-    }
-    async function getInfo(){
-        try {
-            const body = {username}
-            const response = await fetch(`http://localhost:5050/clientInformation/api/profileget/${username}`, {
+            this.setState({username:parseResponse});
+            console.log("usernameL :",this.state.username)
+
+            /////////////////////////
+            const username  = this.state.username
+            const response2 = await fetch(`http://localhost:5050/order/getorder/${username}`, {
                 method: "GET",
                 headers:{"Content-type" : "application/json"},
                 // body: JSON.stringify(body),
                 dataType: 'jsonp'
             });
-            
-            const parseResponse = await response.json()
-            
-            setName(parseResponse.results[0].name);
+            const parseResponse2 = await response2.json()
+            this.setState({data: parseResponse2.results})
 
-            
         } catch (error) {
             console.error(error.message)
-            
+
         }
     }
+    //  getInfo= async ()=>{
+    //     try {
+    //         const body = {username}
+    //         const response = await fetch(`http://localhost:5050/clientInformation/api/profileget/${username}`, {
+    //             method: "GET",
+    //             headers:{"Content-type" : "application/json"},
+    //             // body: JSON.stringify(body),
+    //             dataType: 'jsonp'
+    //         });
 
-    async function getOrder(){
+    //         const parseResponse = await response.json()
+
+    //         this.setState(parseResponse.results)
+
+
+    //     } catch (error) {
+    //         console.error(error.message)
+
+    //     }
+    // }
+
+     getOrder = async ()=>{
         try {
-            const body = {username}
+            const username  = this.state.username
+            // console.log("this is viet ", username)
             const response = await fetch(`http://localhost:5050/order/getorder/${username}`, {
                 method: "GET",
                 headers:{"Content-type" : "application/json"},
                 // body: JSON.stringify(body),
                 dataType: 'jsonp'
             });
-            
+
             const parseResponse = await response.json()
-            console.log(parseResponse);
-            setReqID(parseResponse.results[0].reqID);
-            setGallons(parseResponse.results[0].gallons_req);
-            setPrice(parseResponse.results[0].price);
-            // setCity(parseResponse.results[0].city);
+            console.log(parseResponse); 
+            // setReqID(parseResponse.results[0].reqID);
+            // setGallons(parseResponse.results[0].gallons_req);
+            // setPrice(parseResponse.results[0].price);
+            // setTotal(parseResponse.results[0].total);
+            this.setState({data: parseResponse.results})
+
             // setState(parseResponse.results[0].state);
             // setZipcode(parseResponse.results[0].zipcode);
-            
+
         } catch (error) {
             console.error(error.message)
-            
         }
     }
-    
-    useEffect(()=>{
-        getUsername()
-    })
-    useEffect(()=>{
-        getInfo()
-    })
-    useEffect(()=>{
-        getOrder()
-    })
+    // handleClick  = ()=>{
+    //     this.getUsername()
+    //     this.getOrder()
+    // }
 
+//  console.log(username)
+componentDidMount(){
+    this.getData()
+    // this.getOrder()
+}
+
+render () {
     return (
         <div>
-            <h2>   Order History {username} </h2>
+            <h2>   Order History of {this.state.username}</h2>
+            {/* <div className="text">Are you sure to get all order</div>
+    <button onClick={e=>this.handleClick()}>Yes</button> */}
+
 <table class="styled-table">
     <thead>
         <tr>
         	<th>Order ID</th>
-            <th>Customer Name</th>
+            <th>Username</th>
             <th>Gallons Purchased</th>
             <th>Price</th>
             <th>Total Amount</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>{reqID}</td>
-            <td>{name}</td>
-            <td>{gallons_req}</td>
-            <td>{price}</td>
-            <td>{total}</td>
-        </tr>
+        {this.state.data.map(row =>{
+            return (
                 <tr>
-            <td>10102</td>
-            <td>Tom Brady</td>
-            <td>500</td>
-            <td>17</td>
-            <td>8,500</td>
-        </tr>
-                <tr>
-            <td>10103</td>
-            <td>Tom Brady</td>
-            <td>800</td>
-            <td>15</td>
-            <td>12,000</td>
-        </tr>
-        <tr class="active-row">
-            <td>10104</td>
-            <td>Tom Brady</td>
-            <td>200</td>
-            <td>20</td>
-            <td>4,000</td>
-        </tr>
+                <td>{row.reqID}</td>
+                <td>{row.username}</td>
+                <td>{row.gallons_req}</td>
+                <td>{row.price}</td>
+                <td>{row.total}</td>
+                </tr>
+            )
+
+
+        })}
+                  
+
 
     </tbody>
 </table>
+
+
+
         </div>
     )
 }
-
+}
 export default OrderHistory
