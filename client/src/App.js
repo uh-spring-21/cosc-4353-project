@@ -23,7 +23,7 @@ function App() {
     
      
         <Route exact path='/'  render={props => !isAuthenticated ? <Login {...props} setAuth = {setAuth}/> : <Redirect to = "/dashboard" />} />
-        <Route path='/login' render={props => <Login {...props} setAuth = {setAuth}/> }/>
+        <Route path='/login' render={props => !isAuthenticated ? <Login {...props} setAuth = {setAuth}/> : <Redirect to = "/dashboard" />} />
         <Route path='/register'  render={props => !isAuthenticated ? <Register {...props} setAuth = {setAuth} /> : <Redirect to = "/dashboard" />} />
         <Route path='/dashboard'  render={props => isAuthenticated ? <Dashboard {...props} setAuth = {setAuth} /> : <Redirect to = "/login" />} />
         <Route path='/fuelquote'  render={props => isAuthenticated ? <FuelQuote {...props} setAuth = {setAuth} /> : <Redirect to = "/login" />} />
