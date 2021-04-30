@@ -255,7 +255,7 @@ const handleSubmit1 = async (e) => {
             <div>
 
                 <label class="required" for="sug_quote">Suggestion Quote:</label>
-            <input type="number" value={price} name="sug_quote" id="sug_quote" placeholder="ex:2345"  required /><span>Dollars</span>
+            <input type="number" value={price} name="sug_quote" id="sug_quote" placeholder="ex:2345"  required /><span>Per Gallon</span>
         </div>
 
         </td>
