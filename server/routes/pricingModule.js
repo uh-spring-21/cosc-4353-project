@@ -12,7 +12,7 @@ router.get("/quote/:username/:gallons_req", async(req,res)=>{
     var zipcode;
 
     try{
-
+        
         const getState = await mysql.query("SELECT * from COSC4353.client_information where username =?", [username], (err,results) =>{
             
             
@@ -25,6 +25,8 @@ router.get("/quote/:username/:gallons_req", async(req,res)=>{
             else if (results.length == 0)
             {
                 return res.status(400).json("Complete your profile");
+                
+
             }
             
             else{

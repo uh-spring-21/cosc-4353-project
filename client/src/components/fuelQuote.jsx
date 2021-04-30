@@ -76,8 +76,14 @@ const FuelQuote = () => {
                 headers: {"Content-type" : "application/json"},
                 dataType: 'jsonp'
             });
+
             const parseRes = await response.json();
                 console.log(parseRes)
+                if (parseRes === "Complete your profile")
+                {alert("Complete your profile")
+            
+            ;}
+
                 setPrice(parseRes.data.price);
                 setTotal(parseRes.data.total);
                 setGallons(parseRes.data.gallons_req);
@@ -137,8 +143,8 @@ const handleSubmit1 = async (e) => {
 
 
 
-
-<table>
+<div className="fuelquote">
+<table >
 
     <tr>
 
@@ -147,8 +153,8 @@ const handleSubmit1 = async (e) => {
             <div>
 
             <label class="required" for="gallons">Gallons Requested:</label>
-            <input type="number" name="gallons" id="gallons" value={gallons_req} onChange = {(e) => setGallons(e.target.value)} required />
-            <button onClick={handleSubmit} type="submit" className="btn btn-primary">Click here to get quote</button>
+            <input type="number" name="gallons" id="gallons" min="1"value={gallons_req} onChange = {(e) => setGallons(e.target.value)} required />
+            
             </div>
 
         </td>
@@ -162,9 +168,9 @@ const handleSubmit1 = async (e) => {
             <div>
 
                 <label class="required" for="address">Delivery Address:</label>
-            <input disabled type="text" value={street} name="street" id="street" placeholder="12345 UH Street" required />
-            <input disabled type="text" value={city} name="city" id="city" placeholder="Houston"  required />
-            <input disabled type="text" value={state} onChange = {(e) => setState(e.target.value)} name="state" id="state" placeholder="Houston"  required />
+            <div><input disabled type="text" value={street} name="street" id="street" required /></div>
+            <div><input disabled type="text" value={city} name="city" id="city"  required /></div>
+            <div><input disabled type="text" value={state} onChange = {(e) => setState(e.target.value)} name="state" id="state"  required /></div>
             {/* <select name="state" id="state" >
                 <option value="" selected="selected">Select a State</option>
                 <option value="AL">Alabama</option>
@@ -271,22 +277,35 @@ const handleSubmit1 = async (e) => {
     </tr>
 
 
-
     <tr>
 
         <td>
 
             <div>
 
-                <button onClick={handleSubmit1}class="button" type="submit" >Submit</button>
-
+                
+    <button onClick={handleSubmit} type="submit" className="button">Click here to get quote</button>
             </div>
 
         </td>
 
     </tr>
+    <tr>
+
+<td>
+
+    <div>
+
+    <button onClick={handleSubmit1}class="button" type="submit" >Submit</button>
+
+    </div>
+
+</td>
+
+</tr>
 
 </table>
+</div>
             </form>
 
 

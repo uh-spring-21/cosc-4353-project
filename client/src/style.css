@@ -86,7 +86,7 @@
   }
   
   /*history*/
-  h2{
+  .header{
   
   padding: 10px;
   
@@ -142,5 +142,12 @@
   }
   .login input{
     color: blue;
+  }
+
+  .fuelquote {
+
+    display: flex;
+    align-items: center;
+    justify-content: center
   }
   

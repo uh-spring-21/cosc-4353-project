@@ -137,7 +137,7 @@ render () {
     return (
         <div>
         <Nav/>
-            <h2>   Order History of {this.state.username}</h2>
+            <div className="header">   Order History of {this.state.username} </div>
             {/* <div className="text">Are you sure to get all order</div>
     <button onClick={e=>this.handleClick()}>Yes</button> */}
 
