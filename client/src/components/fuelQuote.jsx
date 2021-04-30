@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from "axios";
 import '../App.css';
-
+import Nav from './nav';
 const FuelQuote = () => {
     let history = useHistory();
 
@@ -124,6 +124,7 @@ const handleSubmit1 = async (e) => {
 
     return (
         <div>
+        <Nav/>
         <h1> Fuel Quote Form </h1><br />
 <form action="">
 

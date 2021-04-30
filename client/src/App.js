@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import './App.css';
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
-import Nav from './components/nav';
+
 import Login from './components/login';
 import Register from './components/register';
-import fuelQuote from './components/fuelQuote';
+import FuelQuote from './components/FuelQuote';
 import OrderHistory from './components/OrderHistory';
-import Home from './routes/Home';
 import Profile from './components/Profile';
 import Dashboard from './components/dashboard';
 import profileRequest from './components/ProfileRequest';
+import Nav from './components/nav';
 function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -22,15 +22,15 @@ function App() {
     <div className="App">
     
      
-        <Route exact path='/' component={Home}/>
-        <Route path='/login' render={props => !isAuthenticated ? <Login {...props} setAuth = {setAuth}/> : <Redirect to = "/dashboard" />} />
+        <Route exact path='/'  render={props => !isAuthenticated ? <Login {...props} setAuth = {setAuth}/> : <Redirect to = "/dashboard" />} />
+        <Route path='/login' render={props => <Login {...props} setAuth = {setAuth}/> }/>
         <Route path='/register'  render={props => !isAuthenticated ? <Register {...props} setAuth = {setAuth} /> : <Redirect to = "/dashboard" />} />
         <Route path='/dashboard'  render={props => isAuthenticated ? <Dashboard {...props} setAuth = {setAuth} /> : <Redirect to = "/login" />} />
-
-        <Route path='/fuelquote' component={fuelQuote}/>
-        <Route path='/orderHistory' component={OrderHistory}/>
+        <Route path='/fuelquote'  render={props => isAuthenticated ? <FuelQuote {...props} setAuth = {setAuth} /> : <Redirect to = "/login" />} />
+        <Route path='/orderHistory'  render={props => isAuthenticated ? <OrderHistory {...props} setAuth = {setAuth} /> : <Redirect to = "/login" />} />
+        <Route path='/profile'  render={props => isAuthenticated ? <Profile {...props} setAuth = {setAuth} /> : <Redirect to = "/login" />} />
         <Route path='/profilerequest' component={profileRequest}/>
-        <Route path='/profile' component={Profile}/>
+
     </div>
   </Router>
   );

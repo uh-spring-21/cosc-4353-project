@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from "axios";
+import Nav from './nav';
 
 
-
-const ProfileRequest = () => {
+const ProfileRequest = ({setAuth}) => {
     const {userID} = useParams();
     let history = useHistory();
     const [username, setUsername] = useState("");
@@ -15,7 +15,15 @@ const ProfileRequest = () => {
     const [state, setState] = useState("");
     const [zipcode, setZipcode] = useState("");
     
-    
+    const checkAuth = async e => {
+        var x = localStorage.token;
+ 
+        if(!x)
+         setAuth = false;
+        else
+         setAuth = true; 
+         
+     } 
     async function getUsername(){
         try {
             const response = await fetch("http://localhost:5050/dashboard/", {
@@ -111,6 +119,9 @@ const ProfileRequest = () => {
 
     return (
         <div>
+            <div>
+                <Nav/>
+            </div>
         <div className="mb-4">
             <form action="">
                     <div className="col">

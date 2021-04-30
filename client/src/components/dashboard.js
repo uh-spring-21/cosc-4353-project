@@ -6,6 +6,7 @@ const Dashboard = ({setAuth}) => {
    
     const logout = async e => {
         setAuth(false);
+        localStorage.clear();
         
     } 
     const [name, setName] =  useState("")
@@ -32,7 +33,7 @@ const Dashboard = ({setAuth}) => {
     return (
         <div>
             <Nav/>
-            <h1>Dashboard {name}</h1>
+            <h1>Welcome {name}</h1>
             <button onClick = {e => logout(e)}>Log out</button>
         </div>
     )

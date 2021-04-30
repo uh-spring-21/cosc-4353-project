@@ -2,8 +2,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from "axios";
 import '../style.css';
-
-const Profile = () => {
+import Nav from './nav';
+const Profile = ({setAuth}) => {
 
     let history = useHistory();
     const [username, setUsername] = useState("");
@@ -41,6 +41,15 @@ const Profile = () => {
     //     };
     //     fetchData();
     // },[]);
+    const checkAuth = async e => {
+        var x = localStorage.token;
+ 
+        if(!x)
+         setAuth = false;
+        else
+         setAuth = true; 
+         
+     } 
 
     async function getUsername(){
         try {
@@ -127,10 +136,11 @@ history.push(`/profilerequest`)
 };
 
 const handleSubmit2 = async (e) => {
-history.push(`/`)
+history.push(`/dashboard`)
 }
     return (
         <div>
+            <Nav/>
         <div className="mb-4">
             <form action="">
                     <div className="col">

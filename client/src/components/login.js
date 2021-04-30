@@ -72,9 +72,11 @@ function Login({setAuth}) {
               onChange = {e => onChange(e)}        
               ></input>
           </div>
+          <div>
             <Link to='/register'>
                Dont have an account?
             </Link>
+            </div>
           <div>
              <input type = "submit" value = "Submit" ></input>
           </div>

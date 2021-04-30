@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import '../App.css';
-
+import {Link } from 'react-router-dom';
 
 
 const Register = ({setAuth})=> {
   const [inputs, setInputs] =  useState({username: "" , password: ""});
 
-  const {username, password, name, street, street2, city, state, zipcode} = inputs;
+  const {username, password } = inputs;//, name, street, street2, city, state, zipcode} = inputs;
   // const {username, password} = inputs;
   const onChange = e => 
     setInputs({...inputs, [e.target.name]: e.target.value});
@@ -31,7 +31,7 @@ const Register = ({setAuth})=> {
       {
         localStorage.setItem("token",parseRes.token)
         setAuth(true);
-        alert('User has been created!');
+        alert('User has been created! Please start by creating profile');
       }
       else{
         alert(parseRes)
@@ -137,6 +137,12 @@ const Register = ({setAuth})=> {
 
           {/* [tri] end */}
           <div>
+            <div>
+            <Link to='/login'>
+               Already Have an Account?
+            
+            </Link>
+            </div>
             <input type = "submit" value = "Submit" ></input>
           </div>
       </form>

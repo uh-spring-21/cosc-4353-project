@@ -1,23 +1,27 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import '../App.css';
-import {Link } from 'react-router-dom';
+import {Link, Redirect, useHistory } from 'react-router-dom';
 
 
-function Nav() {
+const Nav = () =>  {
     const navStyle = {
         color: 'white'
     }
+    let history = useHistory();
+
+
+
   return (
     <div>
       <nav>
           <ul className= "nav-links">
-              <Link style= {navStyle} to='/login'>
+              {/* <Link style= {navStyle} to='/login'>
                 <li>Login</li>
               </Link>
 
               <Link style = {navStyle} to ='/register'>
                 <li>Register</li>
-              </Link>
+              </Link> */}
               <Link style = {navStyle} to ='/fuelquote'>
                 <li>Fuel Quote Form</li>
               </Link>
@@ -27,10 +31,13 @@ function Nav() {
               <Link style = {navStyle} to ='/profile'>
                 <li>Profile Managerment</li>
               </Link>
+              <Link to = '/dashboard'>
+              Home
+              </Link>
           </ul>
       </nav>
     </div>
   );
 }
 
-export default Nav;
+export default Nav

@@ -5,8 +5,15 @@ import { useParams, useHistory } from 'react-router-dom';
 import axios from "axios";
 import { OrderContext } from '../context/OrderContext'
 import '../style.css';
+import Nav from './nav';
 class OrderHistory  extends React.Component {
-
+    
+    constructor(props){
+        super(props);
+        //does whatever stuff        
+        
+    }
+    
     // let history = useHistory();
     // const [username, setUsername] = useState("");
     // const [name, setName] = useState("");
@@ -80,7 +87,15 @@ class OrderHistory  extends React.Component {
 
     //     }
     // }
-
+    checkAuth = async e => {
+        var x = localStorage.token;
+ 
+        if(!x)
+         this.props = false;
+        else
+         this.props = true; 
+         
+     } 
      getOrder = async ()=>{
         try {
             const username  = this.state.username
@@ -121,6 +136,7 @@ componentDidMount(){
 render () {
     return (
         <div>
+        <Nav/>
             <h2>   Order History of {this.state.username}</h2>
             {/* <div className="text">Are you sure to get all order</div>
     <button onClick={e=>this.handleClick()}>Yes</button> */}
